@@ -127,56 +127,56 @@ describe 'Users' do
         page.should have_content "Password is too short (minimum is 8 characters)"
       end
     end
+  end
 
-    context '_PUT users/:id_' do
-      it 'valid user update' do
-        user = create :user
-        visit edit_user_path user
+  context 'PUT users/:id' do
+    it 'valid user update' do
+      user = create :user
+      visit edit_user_path user
 
-        find_field('Email').value.should == 'xajler@gmail.com'
-        find_field('Full Name').value.should == 'Kornelije Sajler'
+      find_field('Email').value.should == 'xajler@gmail.com'
+      find_field('Full Name').value.should == 'Kornelije Sajler'
 
-        fill_in 'Email', with: 'xajler@gmail.com'
-        fill_in 'Password', with: 'aoeuidht'
-        fill_in 'Confirm Password', with: 'aoeuidht'
-        fill_in 'Full Name', with: 'Kornelije Sajler - xajler'
-        click_button 'Update User'
+      fill_in 'Email', with: 'xajler@gmail.com'
+      fill_in 'Password', with: 'aoeuidht'
+      fill_in 'Confirm Password', with: 'aoeuidht'
+      fill_in 'Full Name', with: 'Kornelije Sajler - xajler'
+      click_button 'Update User'
 
-        current_path.should == edit_user_path(user)
-        page.should have_content 'The User is successfully updated!'
-      end
+      current_path.should == edit_user_path(user)
+      page.should have_content 'The User is successfully updated!'
+    end
 
-      it 'invalid when passwords mismatch' do
-        user = create :user
-        visit edit_user_path user
+    it 'invalid when passwords mismatch' do
+      user = create :user
+      visit edit_user_path user
 
-        fill_in 'Email', with: 'xajler@gmail.com'
-        fill_in 'Password', with: 'aoeuidht'
-        fill_in 'Confirm Password', with: 'aoeu'
-        fill_in 'Full Name', with: 'Kornelije Sajler'
-        click_button 'Update User'
+      fill_in 'Email', with: 'xajler@gmail.com'
+      fill_in 'Password', with: 'aoeuidht'
+      fill_in 'Confirm Password', with: 'aoeu'
+      fill_in 'Full Name', with: 'Kornelije Sajler'
+      click_button 'Update User'
 
-        current_path.should == edit_user_path(user)
-        page.should have_content "Password doesn't match confirmation"
-      end
+      current_path.should == edit_user_path(user)
+      page.should have_content "Password doesn't match confirmation"
+    end
 
-      it 'keeps the User Email intact while other fields do change' do
-        user = create :user
-        visit edit_user_path user
+    it 'keeps the User Email intact while other fields do change' do
+      user = create :user
+      visit edit_user_path user
 
-        find_field('Email').value.should == 'xajler@gmail.com'
-        find_field('Full Name').value.should == 'Kornelije Sajler'
+      find_field('Email').value.should == 'xajler@gmail.com'
+      find_field('Full Name').value.should == 'Kornelije Sajler'
 
-        fill_in 'Email', with: 'xxx@example.com'
-        fill_in 'Password', with: 'aoeuidht'
-        fill_in 'Confirm Password', with: 'aoeuidht'
-        fill_in 'Full Name', with: 'Kornelije Sajler - xajler'
-        click_button 'Update User'
+      fill_in 'Email', with: 'xxx@example.com'
+      fill_in 'Password', with: 'aoeuidht'
+      fill_in 'Confirm Password', with: 'aoeuidht'
+      fill_in 'Full Name', with: 'Kornelije Sajler - xajler'
+      click_button 'Update User'
 
-        current_path.should == edit_user_path(user)
-        find_field('Email').value.should == 'xajler@gmail.com'
-        find_field('Full Name').value.should == 'Kornelije Sajler - xajler'
-      end
+      current_path.should == edit_user_path(user)
+      find_field('Email').value.should == 'xajler@gmail.com'
+      find_field('Full Name').value.should == 'Kornelije Sajler - xajler'
     end
   end
 end
